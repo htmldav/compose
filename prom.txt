@@ -25,3 +25,26 @@ http://51.250.18.239:8080/hello-1.0/
 
 
 /tmp/target/hello-1.0.war
+
+version: '3'
+
+    services:
+      mysql:
+        image: mysql:5.5
+        container_name: mysql
+        restart: always
+        environment:
+          MYSQL_DATABASE: my-test-app
+          MYSQL_ROOT_PASSWORD: root
+        volumes:
+          - ./docker/db:/docker-entrypoint-initdb.d
+        ports:
+           - "3306:3306"
+
+      tomcat:
+        image: tomcat:8.5.35
+        container_name: tomcat
+        volumes:
+          - ./docker/myapp.war:/usr/local/tomcat/webapps/myapp.war
+        ports:
+          - "8080:8080"
