@@ -1,13 +1,18 @@
-version: "2"
+version: "3"
+volumes:
+  web_data:
+    external: true
 services:
   boxfuse-sample-java-war-hello:
     build: .
+    volumes:
+      - web_data:/tmp/target/
     links:
       - tomcat
   tomcat:
     image: tomcat:9.0-jre8-alpine
     volumes:
-      - "./target:/usr/local/tomcat/webapps/"
+      - web_data:/usr/local/tomcat/webapps/
     ports:
       - "8080:8080"
     entrypoint:
