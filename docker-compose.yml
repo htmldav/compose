@@ -7,12 +7,13 @@ services:
     build: .
     volumes:
       - web_data:/tmp/target/
+
   tomcat:
     image: tomcat:9.0-jre8-alpine
+    depends_on:
+      - boxfuse-sample-java-war-hello
     volumes:
-      - type: bind
-        source: /var/lib/docker/volumes/web_data/_data
-        target: /usr/local/tomcat/webapps/
+      - web_data:/usr/local/tomcat/webapps/
     ports:
       - "8080:8080"
     entrypoint:
