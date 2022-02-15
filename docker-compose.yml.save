@@ -1,21 +1,18 @@
-version: "3"
-volumes:
-  web_data:
-    external: true
-services:
+version '3'services:
   boxfuse-sample-java-war-hello:
     build: .
     volumes:
-      - web_data:/tmp/target/
-  
+      - static-content:/tmp/target/
+    links:
+      - tomcat
   tomcat:
     image: tomcat:9.0-jre8-alpine
-    depends_on:
-      - boxfuse-sample-java-war-hello
     volumes:
-      - web_data:/usr/local/tomcat/webapps/
+      - static-content:/usr/local/tomcat/webapps/
     ports:
       - "8080:8080"
     entrypoint:
       - "catalina.sh"
       - "run"
+volumes:
+  static-content:
