@@ -16,6 +16,4 @@ services:
       - web_data:/usr/local/tomcat/webapps/
     ports:
       - "8080:8080"
-    entrypoint:
-      - "catalina.sh"
-      - "run"
+    
